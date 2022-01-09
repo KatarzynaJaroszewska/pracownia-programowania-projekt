@@ -47,7 +47,7 @@ public class ManufacturerRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ManufacturerDTO> updateManufacturer(@PathVariable("id") Long id) {
+    public ResponseEntity<ManufacturerDTO> deleteManufacturer(@PathVariable("id") Long id) {
         ManufacturerDTO manufacturerDTO = this.manufacturerService.deleteManufacturer(id);
         return new ResponseEntity<>(manufacturerDTO, HttpStatus.OK);
     }
