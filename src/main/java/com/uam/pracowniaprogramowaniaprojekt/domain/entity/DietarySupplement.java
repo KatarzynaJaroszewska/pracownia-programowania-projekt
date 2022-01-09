@@ -21,10 +21,7 @@ public class DietarySupplement extends AbstractBaseEntity {
     @Column(nullable = false)
     private String name;
 
-    // TODO: 1/9/2022 remove this annotation - change to id value in dto
-    @ManyToOne(
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
-    )
+    @ManyToOne
     private Manufacturer manufacturer;
 
     @Column(nullable = false)
@@ -37,8 +34,9 @@ public class DietarySupplement extends AbstractBaseEntity {
     @Enumerated(EnumType.STRING)
     private ProductCategory productCategory;
 
+    // TODO: 1/10/2022 change cascade type
     @ManyToMany(
-            cascade = {CascadeType.MERGE, CascadeType.PERSIST}
+            cascade = {CascadeType.ALL}
     )
     @JoinTable(name = "supplement_ingredient",
                 joinColumns = @JoinColumn(name = "dietary_supplement_id"),
