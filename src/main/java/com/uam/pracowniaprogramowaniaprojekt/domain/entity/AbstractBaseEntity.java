@@ -1,5 +1,6 @@
 package com.uam.pracowniaprogramowaniaprojekt.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +15,11 @@ import java.time.LocalDateTime;
 @Setter
 public abstract class AbstractBaseEntity extends AbstractIdentityEntity {
 
+    // TODO: 1/10/2022 remove json ignore
+    @JsonIgnore
     private LocalDateTime createdDate;
 
+    @JsonIgnore
     private LocalDateTime updatedDate;
 
     @Version
