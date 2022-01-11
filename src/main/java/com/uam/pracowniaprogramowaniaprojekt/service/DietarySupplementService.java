@@ -1,6 +1,7 @@
 package com.uam.pracowniaprogramowaniaprojekt.service;
 
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementDTO;
+import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementSearchCriteriaDTO;
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.NewOrUpdatedDietarySupplementDTO;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface DietarySupplementService {
 
     DietarySupplementDTO deleteDietarySupplement(Long id);
 
-    // TODO: 1/9/2022 add search by criteria method 
+    List<DietarySupplementDTO> findDietarySupplementsByCriteria(DietarySupplementSearchCriteriaDTO criteria);
     
 }

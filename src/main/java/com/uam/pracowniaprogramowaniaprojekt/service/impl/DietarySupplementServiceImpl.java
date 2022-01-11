@@ -1,9 +1,11 @@
 package com.uam.pracowniaprogramowaniaprojekt.service.impl;
 
+import com.uam.pracowniaprogramowaniaprojekt.dao.CustomizedDietarySupplementRepository;
 import com.uam.pracowniaprogramowaniaprojekt.dao.DietarySupplementRepository;
 import com.uam.pracowniaprogramowaniaprojekt.dao.IngredientRepository;
 import com.uam.pracowniaprogramowaniaprojekt.dao.ManufacturerRepository;
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementDTO;
+import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementSearchCriteriaDTO;
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.IngredientDTO;
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.NewOrUpdatedDietarySupplementDTO;
 import com.uam.pracowniaprogramowaniaprojekt.domain.entity.DietarySupplement;
@@ -32,6 +34,8 @@ public class DietarySupplementServiceImpl implements DietarySupplementService {
 
     private final ManufacturerRepository manufacturerRepository;
 
+    private final CustomizedDietarySupplementRepository customizedDietarySupplementRepository;
+
     private final DietarySupplementMapper mapper;
 
     private final NewOrUpdatedDietarySupplementMapper newOrUpdatedDietarySupplementMapper;
@@ -39,10 +43,11 @@ public class DietarySupplementServiceImpl implements DietarySupplementService {
     private final IngredientMapper ingredientMapper;
 
     @Autowired
-    public DietarySupplementServiceImpl(DietarySupplementRepository dietarySupplementRepository, IngredientRepository ingredientRepository, ManufacturerRepository manufacturerRepository, DietarySupplementMapper mapper, NewOrUpdatedDietarySupplementMapper newOrUpdatedDietarySupplementMapper, IngredientMapper ingredientMapper) {
+    public DietarySupplementServiceImpl(DietarySupplementRepository dietarySupplementRepository, IngredientRepository ingredientRepository, ManufacturerRepository manufacturerRepository, CustomizedDietarySupplementRepository customizedDietarySupplementRepository, DietarySupplementMapper mapper, NewOrUpdatedDietarySupplementMapper newOrUpdatedDietarySupplementMapper, IngredientMapper ingredientMapper) {
         this.dietarySupplementRepository = dietarySupplementRepository;
         this.ingredientRepository = ingredientRepository;
         this.manufacturerRepository = manufacturerRepository;
+        this.customizedDietarySupplementRepository = customizedDietarySupplementRepository;
         this.mapper = mapper;
         this.newOrUpdatedDietarySupplementMapper = newOrUpdatedDietarySupplementMapper;
         this.ingredientMapper = ingredientMapper;
@@ -122,5 +127,10 @@ public class DietarySupplementServiceImpl implements DietarySupplementService {
         }
         this.dietarySupplementRepository.deleteById(id);
         return this.mapper.mapToDto(optionalEntity.get());
+    }
+
+    @Override
+    public List<DietarySupplementDTO> findDietarySupplementsByCriteria(DietarySupplementSearchCriteriaDTO criteria) {
+        return this.mapper.mapToDtos(customizedDietarySupplementRepository.findDietarySupplementsBySearchCriteria(criteria));
     }
 }

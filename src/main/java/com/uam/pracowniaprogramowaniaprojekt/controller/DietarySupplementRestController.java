@@ -1,6 +1,7 @@
 package com.uam.pracowniaprogramowaniaprojekt.controller;
 
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementDTO;
+import com.uam.pracowniaprogramowaniaprojekt.domain.dto.DietarySupplementSearchCriteriaDTO;
 import com.uam.pracowniaprogramowaniaprojekt.domain.dto.NewOrUpdatedDietarySupplementDTO;
 import com.uam.pracowniaprogramowaniaprojekt.service.DietarySupplementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class DietarySupplementRestController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<DietarySupplementDTO>> findAllIngredients() {
+    public ResponseEntity<List<DietarySupplementDTO>> findAllDietarySupplements() {
         List<DietarySupplementDTO> allDietarySupplements = this.dietarySupplementService.findAllDietarySupplements();
         return ResponseEntity.ok()
                 .body(allDietarySupplements);
@@ -34,6 +35,19 @@ public class DietarySupplementRestController {
         DietarySupplementDTO dietarySupplementDTO = this.dietarySupplementService.findById(id);
         return ResponseEntity.ok()
                 .body(dietarySupplementDTO);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<DietarySupplementDTO>> findDietarySupplementsByCriteria(
+            @RequestParam(required = false, value = "name") String name,
+            @RequestParam(required = false, value = "manufacturerName") String manufacturerName,
+            @RequestParam(required = false, value = "productCategory") String productCategory,
+            @RequestParam(required = false, value = "ingredientName") String ingredientName
+    ){
+        DietarySupplementSearchCriteriaDTO criteria = new DietarySupplementSearchCriteriaDTO(name, manufacturerName, productCategory, ingredientName);
+        List<DietarySupplementDTO> dietarySupplementsList = this.dietarySupplementService.findDietarySupplementsByCriteria(criteria);
+        return ResponseEntity.ok()
+                .body(dietarySupplementsList);
     }
 
     @PostMapping("/")
