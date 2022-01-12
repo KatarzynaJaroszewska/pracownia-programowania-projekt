@@ -1,5 +1,6 @@
 package com.uam.pracowniaprogramowaniaprojekt.controller.common;
 
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,14 @@ public class GlobalControllerAdvice {
     public Error entityNotFoundExceptionHandler(final Exception ex) {
         LOG.error("Error occurred", ex);
         return new Error(ex.getMessage(), 404);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Error jdbcSQLIntegrityConstraintViolationExceptionHandler(final Exception ex) {
+        LOG.error("Error occurred", ex);
+        return new Error(ex.getMessage(), 409);
     }
 
 }
