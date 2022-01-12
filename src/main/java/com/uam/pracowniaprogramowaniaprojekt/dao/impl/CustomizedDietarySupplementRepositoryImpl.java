@@ -31,7 +31,8 @@ public class CustomizedDietarySupplementRepositoryImpl implements CustomizedDiet
         Join<DietarySupplement, Ingredient> ingredientJoin = root.join(dietarySupplementMetaModel.getSet("ingredients", Ingredient.class));
         List<Predicate> predicates = prepareListOfPredicates(criteria, criteriaBuilder, root, ingredientJoin);
         criteriaQuery.select(root)
-                .where(predicates.toArray(new Predicate[]{}));
+                .where(predicates.toArray(new Predicate[]{}))
+                .distinct(true);
         return manager.createQuery(criteriaQuery).getResultList();
     }
 
